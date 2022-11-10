@@ -1,0 +1,9 @@
+@mixin title {
+  font-size: $fontLarge;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+@mixin header {
+  padding: 15px 20px;
+  background-color: #fff;
+}

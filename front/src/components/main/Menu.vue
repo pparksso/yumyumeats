@@ -1,25 +1,69 @@
 <template>
   <div class="menu">
     <ul>
-      <li><img src="../../assets/images/icon/all.png" alt="전체" /><span>전체</span></li>
-      <li><img src="../../assets/images/icon/bibimbap.png" alt="한식" /><span>한식</span></li>
-      <li><img src="../../assets/images/icon/buns.png" alt="중식" /><span>중식</span></li>
-      <li><img src="../../assets/images/icon/sushi.png" alt="일식" /><span>일식</span></li>
-      <li><img src="../../assets/images/icon/spaghetti.png" alt="아시안/양식" /><span>아시안/양식</span></li>
-      <li><img src="../../assets/images/icon/tteokbokki.png" alt="분식" /><span>분식</span></li>
-      <li><img src="../../assets/images/icon/hamberger.png" alt="패스트푸드" /><span>패스트푸드</span></li>
-      <li><img src="../../assets/images/icon/chicken-leg.png" alt="치킨" /><span>치킨</span></li>
-      <li><img src="../../assets/images/icon/coffee.png" alt="카페" /><span>카페</span></li>
-      <li><img src="../../assets/images/icon/beer.png" alt="술" /><span>술</span></li>
-      <li><img src="../../assets/images/icon/spoon.png" alt="기타" /><span>기타</span></li>
-      <li><img src="../../assets/images/icon/recommended.png" alt="추천" /><span>추천</span></li>
+      <li
+        :class="{}"
+        v-for="(m, i) in menus"
+        :key="m"
+        @click="
+          gps.getMenuAct(m);
+          router.push('/search');
+        "
+      >
+        <div class="imgBox"><img :src="`/assets/images/${i + 1}.png`" :alt="m" /></div>
+        <span>{{ m }}</span>
+      </li>
     </ul>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import { watch } from "@vue/runtime-core";
+import { storeToRefs } from "pinia";
+import { useRouter } from "vue-router";
+import { gpsStore } from "../../store/gps";
+const gps = gpsStore();
+const { menu } = storeToRefs(gps);
+const menus = ["전체", "한식", "중식", "일식", "아시안/양식", "분식", "패스트푸드", "치킨", "카페", "술", "기타", "추천"];
+const router = useRouter();
+</script>
 
 <style lang="scss" scoped>
 .menu {
+  margin: 15px 0;
+  ul {
+    display: flex;
+    flex-wrap: wrap;
+    li {
+      cursor: pointer;
+      margin: 10px;
+      width: calc(33.33% - 20px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      .imgBox {
+        background-color: #f8f8f8;
+        display: flex;
+        border-radius: 15px;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        position: relative;
+        &::after {
+          content: "";
+          display: block;
+          padding-bottom: 100%;
+        }
+        img {
+          width: 55px;
+        }
+      }
+      span {
+        display: block;
+        margin-top: 7px;
+        font-size: $fontSmall;
+      }
+    }
+  }
 }
 </style>

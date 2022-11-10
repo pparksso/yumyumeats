@@ -20,5 +20,6 @@ body {
   color: #333;
   background: $backgroundColor;
   box-sizing: border-box;
+  font-weight: 500;
 }
 </style>
