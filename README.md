@@ -16,7 +16,7 @@
 #### 메뉴별 맛집 찾기
 
 - 무한 스크롤
-- search menu class, click 기능(class 해야됨)
+- search menu class, click 기능
 
 #### 상세페이지
 

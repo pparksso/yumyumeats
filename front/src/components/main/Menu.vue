@@ -2,7 +2,6 @@
   <div class="menu">
     <ul>
       <li
-        :class="{}"
         v-for="(m, i) in menus"
         :key="m"
         @click="
@@ -18,12 +17,9 @@
 </template>
 
 <script setup>
-import { watch } from "@vue/runtime-core";
-import { storeToRefs } from "pinia";
 import { useRouter } from "vue-router";
 import { gpsStore } from "../../store/gps";
 const gps = gpsStore();
-const { menu } = storeToRefs(gps);
 const menus = ["전체", "한식", "중식", "일식", "아시안/양식", "분식", "패스트푸드", "치킨", "카페", "술", "기타", "추천"];
 const router = useRouter();
 </script>

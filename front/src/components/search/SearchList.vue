@@ -1,5 +1,5 @@
 <template>
-  <div class="list">
+  <div class="list" v-if="list.length > 0">
     <ul>
       <li v-for="(item, idx) in list" :key="item">
         <div class="imgBox">
@@ -12,6 +12,9 @@
       </li>
     </ul>
   </div>
+  <div class="empty" v-else>
+    <p>이 근처에 맛집이 없어요😭</p>
+  </div>
 </template>
 
 <script setup>
@@ -20,7 +23,6 @@ import { storeToRefs } from "pinia";
 import { gpsStore } from "../../store/gps";
 const gps = gpsStore();
 const { x, y, menu, list, img } = storeToRefs(gps);
-
 if (menu == "카페") {
   gps.getShopListAct(x.value, y.value, menu.value, 1, "CE7");
 } else {
@@ -43,6 +45,9 @@ if (menu == "카페") {
       display: flex;
       padding: 30px 20px;
       border-bottom: 1px solid $borderColor;
+      &:last-child {
+        border-bottom: none;
+      }
       .imgBox {
         img {
           width: 100px;
@@ -65,5 +70,9 @@ if (menu == "카페") {
       }
     }
   }
+}
+.empty {
+  text-align: center;
+  padding: 220px 0;
 }
 </style>

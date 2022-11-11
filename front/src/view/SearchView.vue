@@ -5,17 +5,9 @@
       <div class="title"><h1>메뉴별 맛집 찾기</h1></div>
       <div class="nav">
         <ul>
-          <li><span>전체</span></li>
-          <li><span>한식</span></li>
-          <li><span>중식</span></li>
-          <li><span>일식</span></li>
-          <li><span>아시안/양식</span></li>
-          <li><span>분식</span></li>
-          <li><span>패스트푸드</span></li>
-          <li><span>치킨</span></li>
-          <li><span>카페</span></li>
-          <li><span>술</span></li>
-          <li><span>기타</span></li>
+          <li v-for="m in menus" :key="m" :class="{ active: m == menu }">
+            <span>{{ m }}</span>
+          </li>
         </ul>
       </div>
     </div>
@@ -26,6 +18,11 @@
 <script setup>
 import SearchBox from "../components/search/SearchBox.vue";
 import Location from "../components/common/Location.vue";
+import { gpsStore } from "../store/gps";
+import { storeToRefs } from "pinia";
+const gps = gpsStore();
+const { menu } = storeToRefs(gps);
+const menus = ["전체", "한식", "중식", "일식", "아시안/양식", "분식", "패스트푸드", "치킨", "카페", "술", "기타", "추천"];
 </script>
 
 <style lang="scss" scoped>
