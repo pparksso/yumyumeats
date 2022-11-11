@@ -36,7 +36,49 @@ export const gpsStore = defineStore("gps", {
         this.img = [];
         for (let i = 0; i < this.count; i++) {
           await kakaoApi.shopImgFetch(this.list[i].place_name).then((res) => {
-            this.img.push(res.data.documents[0].thumbnail_url);
+            if (res.data.documents[0]) {
+              this.img.push(res.data.documents[0].thumbnail_url);
+            } else {
+              this.img.push("/assets/images/no-photo.png");
+            }
+          });
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    getIdxAct(i) {
+      return (this.idx = i);
+    },
+  },
+});
+export const recommendStore = defineStore("recommend", {
+  state: () => ({
+    address: "",
+    menu: "",
+    list: "",
+    img: [],
+    count: "",
+    idx: "",
+  }),
+  actions: {
+    getMenuAct(select) {
+      return (this.menu = select);
+    },
+    async getShopListAct(x, y, menu, page, kind) {
+      try {
+        await kakaoApi.shopFetch(x, y, menu, page, kind).then((res) => {
+          this.list = res.data.documents;
+          this.count = res.data.documents.length;
+        });
+        this.img = [];
+        for (let i = 0; i < this.count; i++) {
+          await kakaoApi.shopImgFetch(this.list[i].place_name).then((res) => {
+            if (res.data.documents[0]) {
+              this.img.push(res.data.documents[0].thumbnail_url);
+            } else {
+              this.img.push("/assets/images/no-photo.png");
+            }
           });
         }
       } catch (err) {

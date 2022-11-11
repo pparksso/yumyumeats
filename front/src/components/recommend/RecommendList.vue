@@ -1,7 +1,7 @@
 <template>
   <div class="list" v-if="list.length > 0">
     <ul>
-      <li v-for="(item, idx) in list" :key="item" @click="gps.getIdxAct(idx)">
+      <li v-for="(item, idx) in list" :key="item" @click="recommend.getIdxAct(idx)">
         <router-link :to="`/detail/${item.id}`">
           <div class="linkBox">
             <div class="imgBox">
@@ -16,30 +16,15 @@
       </li>
     </ul>
   </div>
-  <div class="empty" v-else>
-    <p>이 근처에 맛집이 없어요😭</p>
-  </div>
+  <div class="empty" v-else><p>메뉴를 검색해주세요😀</p></div>
 </template>
 
 <script setup>
-// import { watch } from "@vue/runtime-core";
 import { storeToRefs } from "pinia";
-import { gpsStore } from "../../store/gps";
-const gps = gpsStore();
-const { x, y, menu, list, img } = storeToRefs(gps);
-if (menu == "카페") {
-  gps.getShopListAct(x.value, y.value, menu.value, 1, "CE7");
-} else {
-  gps.getShopListAct(x.value, y.value, menu.value, 1, "FD6");
-}
+import { recommendStore } from "../../store/gps";
 
-// watch(menu, (newMenu) => {
-//   if (newMenu == "카페") {
-//     return gps.getShopListAct(x, y, newMenu, 1, "CE7");
-//   } else {
-//     return gps.getShopListAct(x, y, newMenu, 1, "FD6");
-//   }
-// });
+const recommend = recommendStore();
+const { list, img } = storeToRefs(recommend);
 </script>
 
 <style lang="scss" scoped>
@@ -79,7 +64,7 @@ if (menu == "카페") {
   }
 }
 .empty {
-  height: 68vh;
+  height: 73vh;
   display: flex;
   justify-content: center;
   align-items: center;

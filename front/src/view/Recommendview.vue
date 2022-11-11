@@ -3,18 +3,40 @@
     <div class="recmHeader">
       <div class="title">맛집 추천받기</div>
       <div class="inputBox">
-        <label><input type="text" /><span class="material-icons"> search </span></label>
+        <label
+          ><input type="text" @input="word = $event.target.value" :value="word" @keydown.enter="recommend.getShopListAct(x, y, word, 1, 'FD6')" /><span
+            class="material-icons"
+            @click="recommend.getShopListAct(x, y, word, 1, 'FD6')"
+          >
+            search
+          </span></label
+        >
       </div>
     </div>
   </div>
+  <RecommendBox />
+  <Footer />
 </template>
 
-<script setup></script>
+<script setup>
+import RecommendBox from "../components/recommend/RecommendBox.vue";
+import Footer from "../components/common/Footer.vue";
+import { gpsStore, recommendStore } from "../store/gps";
+import { ref } from "vue";
+import { storeToRefs } from "pinia";
+
+const recommend = recommendStore();
+const gps = gpsStore();
+const { x, y } = storeToRefs(gps);
+
+let word = ref("");
+</script>
 
 <style lang="scss" scoped>
 .container {
   .recmHeader {
     box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
     @include header;
     .title {
       @include title;

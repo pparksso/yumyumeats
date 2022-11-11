@@ -36,6 +36,7 @@ const route = useRoute();
     background-color: #fff;
     border-radius: 10px;
     text-align: center;
+    margin-bottom: 70px;
     .imgBox {
       img {
         border-radius: 15px;

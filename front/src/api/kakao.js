@@ -10,7 +10,7 @@ function regionFetch(x, y) {
  * 카테고리(메뉴)
  */
 function shopFetch(x, y, menu, page, kind) {
-  return request.get(`/v2/local/search/keyword.json?query=${menu}&y=${y}&x=${x}&radius=1000&page=${page}&size=10&category_group_code=${kind}`);
+  return request.get(`/v2/local/search/keyword.json?query=${menu}&y=${y}&x=${x}&radius=3000&page=${page}&size=10&category_group_code=${kind}`);
 }
 /**
  * 가게리스트 이미지 검색
