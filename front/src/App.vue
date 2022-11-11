@@ -22,4 +22,8 @@ body {
   box-sizing: border-box;
   font-weight: 500;
 }
+a {
+  text-decoration: none;
+  color: inherit;
+}
 </style>

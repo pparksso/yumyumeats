@@ -5,7 +5,7 @@
       <div class="title"><h1>메뉴별 맛집 찾기</h1></div>
       <div class="nav">
         <ul>
-          <li v-for="m in menus" :key="m" :class="{ active: m == menu }">
+          <li v-for="m in menus" :key="m" :class="{ active: m == menu }" @click="">
             <span>{{ m }}</span>
           </li>
         </ul>

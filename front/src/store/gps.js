@@ -10,6 +10,7 @@ export const gpsStore = defineStore("gps", {
     list: "",
     img: [],
     count: "",
+    idx: "",
   }),
   actions: {
     getAreaAct() {
@@ -32,6 +33,7 @@ export const gpsStore = defineStore("gps", {
           this.list = res.data.documents;
           this.count = res.data.documents.length;
         });
+        this.img = [];
         for (let i = 0; i < this.count; i++) {
           await kakaoApi.shopImgFetch(this.list[i].place_name).then((res) => {
             this.img.push(res.data.documents[0].thumbnail_url);
@@ -40,6 +42,9 @@ export const gpsStore = defineStore("gps", {
       } catch (err) {
         console.log(err);
       }
+    },
+    getIdxAct(i) {
+      return (this.idx = i);
     },
   },
 });

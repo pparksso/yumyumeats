@@ -1,14 +1,18 @@
 <template>
   <div class="list" v-if="list.length > 0">
     <ul>
-      <li v-for="(item, idx) in list" :key="item">
-        <div class="imgBox">
-          <img :src="img[idx]" :alt="item.place_name" />
-        </div>
-        <div class="descBox">
-          <h2>{{ item.place_name }}</h2>
-          <p>{{ item.distance }} <span>m</span></p>
-        </div>
+      <li v-for="(item, idx) in list" :key="item" @click="gps.getIdxAct(idx)">
+        <router-link :to="`/detail/${item.id}`">
+          <div class="linkBox">
+            <div class="imgBox">
+              <img :src="img[idx]" :alt="item.place_name" />
+            </div>
+            <div class="descBox">
+              <h2>{{ item.place_name }}</h2>
+              <p>{{ item.distance }} <span>m</span></p>
+            </div>
+          </div>
+        </router-link>
       </li>
     </ul>
   </div>
@@ -42,29 +46,32 @@ if (menu == "카페") {
 .list {
   ul {
     li {
-      display: flex;
-      padding: 30px 20px;
       border-bottom: 1px solid $borderColor;
       &:last-child {
         border-bottom: none;
       }
-      .imgBox {
-        img {
-          width: 100px;
-          border-radius: 15px;
+      .linkBox {
+        cursor: pointer;
+        padding: 30px 20px;
+        display: flex;
+        .imgBox {
+          img {
+            width: 100px;
+            border-radius: 15px;
+          }
         }
-      }
-      .descBox {
-        margin: 15px 0 0 20px;
-        h2 {
-          font-size: $fontNomal;
-          font-weight: 700;
-          margin-bottom: 20px;
-        }
-        p {
-          font-size: 15px;
-          span {
-            font-size: 13px;
+        .descBox {
+          margin: 15px 0 0 20px;
+          h2 {
+            font-size: $fontNomal;
+            font-weight: 700;
+            margin-bottom: 20px;
+          }
+          p {
+            font-size: 15px;
+            span {
+              font-size: 13px;
+            }
           }
         }
       }
