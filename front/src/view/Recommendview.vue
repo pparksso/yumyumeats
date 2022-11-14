@@ -4,9 +4,9 @@
       <div class="title">맛집 추천받기</div>
       <div class="inputBox">
         <label
-          ><input type="text" @input="word = $event.target.value" :value="word" @keydown.enter="recommend.getShopListAct(x, y, word, 1, 'FD6')" /><span
+          ><input type="text" @input="word = $event.target.value" :value="word" @keydown.enter="gps.getShopListAct(x, y, word, 1, 'FD6')" /><span
             class="material-icons"
-            @click="recommend.getShopListAct(x, y, word, 1, 'FD6')"
+            @click="gps.getShopListAct(x, y, word, 1, 'FD6')"
           >
             search
           </span></label
@@ -21,11 +21,10 @@
 <script setup>
 import RecommendBox from "../components/recommend/RecommendBox.vue";
 import Footer from "../components/common/Footer.vue";
-import { gpsStore, recommendStore } from "../store/gps";
+import { gpsStore } from "../store/gps";
 import { ref } from "vue";
 import { storeToRefs } from "pinia";
 
-const recommend = recommendStore();
 const gps = gpsStore();
 const { x, y } = storeToRefs(gps);
 

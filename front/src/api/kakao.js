@@ -18,5 +18,11 @@ function shopFetch(x, y, menu, page, kind) {
 function shopImgFetch(shop) {
   return request.get(`/v2/search/image?query=${shop}&size=1`);
 }
-const kakaoApi = { regionFetch, shopFetch, shopImgFetch };
+/**
+ * 상세페이지
+ */
+function placeFetch(place) {
+  return request.get(`/v2/local/search/keyword.json?query=${place}`);
+}
+const kakaoApi = { regionFetch, shopFetch, shopImgFetch, placeFetch };
 export default kakaoApi;

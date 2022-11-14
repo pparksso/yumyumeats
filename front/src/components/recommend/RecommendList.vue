@@ -1,7 +1,7 @@
 <template>
   <div class="list" v-if="list.length > 0">
     <ul>
-      <li v-for="(item, idx) in list" :key="item" @click="recommend.getIdxAct(idx)">
+      <li v-for="(item, idx) in list" :key="item" @click="gps.getIdxAct(idx)">
         <router-link :to="`/detail/${item.id}`">
           <div class="linkBox">
             <div class="imgBox">
@@ -21,10 +21,10 @@
 
 <script setup>
 import { storeToRefs } from "pinia";
-import { recommendStore } from "../../store/gps";
+import { gpsStore } from "../../store/gps";
 
-const recommend = recommendStore();
-const { list, img } = storeToRefs(recommend);
+const gps = gpsStore();
+const { list, img } = storeToRefs(gps);
 </script>
 
 <style lang="scss" scoped>

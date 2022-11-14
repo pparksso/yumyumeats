@@ -27,8 +27,10 @@ import { storeToRefs } from "pinia";
 import { gpsStore } from "../../store/gps";
 const gps = gpsStore();
 const { x, y, menu, list, img } = storeToRefs(gps);
-if (menu == "카페") {
+if (menu.value == "카페") {
   gps.getShopListAct(x.value, y.value, menu.value, 1, "CE7");
+} else if (menu.value == "기타" || menu.value == "전체") {
+  gps.getShopListAct(x.value, y.value, "맛집", 1, "FD6");
 } else {
   gps.getShopListAct(x.value, y.value, menu.value, 1, "FD6");
 }
