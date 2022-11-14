@@ -1,7 +1,14 @@
 <template>
   <div class="list" v-if="list.length > 0">
     <ul>
-      <li v-for="(item, idx) in list" :key="item" @click="gps.getIdxAct(idx)">
+      <li
+        v-for="(item, idx) in list"
+        :key="item"
+        @click="
+          gps.getIdxAct(idx);
+          transmitData(item.place_name);
+        "
+      >
         <router-link :to="`/detail/${item.id}`">
           <div class="linkBox">
             <div class="imgBox">
@@ -22,10 +29,13 @@
 </template>
 
 <script setup>
-// import { watch } from "@vue/runtime-core";
 import { storeToRefs } from "pinia";
 import { gpsStore } from "../../store/gps";
+import { getCurrentInstance } from "vue";
 const gps = gpsStore();
+const internalInstance = getCurrentInstance();
+const emitter = internalInstance.appContext.config.globalProperties.emitter;
+
 const { x, y, menu, list, img } = storeToRefs(gps);
 if (menu.value == "카페") {
   gps.getShopListAct(x.value, y.value, menu.value, 1, "CE7");
@@ -35,13 +45,9 @@ if (menu.value == "카페") {
   gps.getShopListAct(x.value, y.value, menu.value, 1, "FD6");
 }
 
-// watch(menu, (newMenu) => {
-//   if (newMenu == "카페") {
-//     return gps.getShopListAct(x, y, newMenu, 1, "CE7");
-//   } else {
-//     return gps.getShopListAct(x, y, newMenu, 1, "FD6");
-//   }
-// });
+function transmitData(data) {
+  emitter.emit("placeName", data);
+}
 </script>
 
 <style lang="scss" scoped>

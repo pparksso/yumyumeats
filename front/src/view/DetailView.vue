@@ -27,10 +27,13 @@ import kakaoApi from "../api/kakao";
 import { storeToRefs } from "pinia";
 import { useRoute } from "vue-router";
 import { gpsStore } from "../store/gps";
-import { watch } from "@vue/runtime-core";
-import { ref } from "vue";
+import { onMounted, watch } from "@vue/runtime-core";
+import { ref, getCurrentInstance } from "vue";
+const internalInstance = getCurrentInstance();
+const emitter = internalInstance.appContext.config.globalProperties.emitter;
+
 const gps = gpsStore();
-const { list, idx, img } = storeToRefs(gps);
+const { idx, img } = storeToRefs(gps);
 const route = useRoute();
 
 let name = ref();
@@ -38,10 +41,17 @@ let phone = ref();
 let address = ref();
 let url = ref();
 let empty = ref(false);
+let placeName = ref();
 
-watch(idx, (newIdx) => {
+onMounted(() => {
+  emitter.on("placeName", (place) => {
+    placeName.value = place;
+  });
+});
+
+watch(placeName, (newPlaceName) => {
   kakaoApi
-    .placeFetch(list.value[newIdx].place_name)
+    .placeFetch(newPlaceName)
     .then((res) => {
       const data = res.data.documents;
       const place = data.filter((i) => {
