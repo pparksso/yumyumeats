@@ -1,15 +1,26 @@
 <template>
   <div class="list" v-if="list.length > 0">
     <ul>
-      <li v-for="(item, idx) in list" :key="item" @click="gps.getIdxAct(idx)">
+      <li
+        v-for="(item, idx) in list"
+        :key="item"
+        @click="
+          gps.getIdxAct(idx);
+          transmitData(item.place_name);
+        "
+      >
         <router-link :to="`/detail/${item.id}`">
           <div class="linkBox">
-            <div class="imgBox">
-              <img :src="img[idx]" :alt="item.place_name" />
+            <div class="locationBox">
+              <span class="material-icons"> location_on </span>
             </div>
             <div class="descBox">
               <h2>{{ item.place_name }}</h2>
-              <p>{{ item.distance }} <span>m</span></p>
+            </div>
+            <div class="infoBox">
+              <p>{{ item.road_address_name }}</p>
+              <span class="phone">{{ item.phone ? item.phone : "-" }}</span
+              ><span class="distance">{{ item.distance }} m</span>
             </div>
           </div>
         </router-link>
@@ -22,9 +33,15 @@
 <script setup>
 import { storeToRefs } from "pinia";
 import { gpsStore } from "../../store/gps";
+import { getCurrentInstance } from "vue";
+const internalInstance = getCurrentInstance();
+const emitter = internalInstance.appContext.config.globalProperties.emitter;
 
+function transmitData(data) {
+  emitter.emit("placeName", data);
+}
 const gps = gpsStore();
-const { list, img } = storeToRefs(gps);
+const { list } = storeToRefs(gps);
 </script>
 
 <style lang="scss" scoped>
@@ -37,25 +54,47 @@ const { list, img } = storeToRefs(gps);
       }
       .linkBox {
         cursor: pointer;
-        padding: 30px 20px;
-        display: flex;
-        .imgBox {
-          img {
-            width: 100px;
-            border-radius: 15px;
+        padding: 30px 0 30px 70px;
+        position: relative;
+        .locationBox {
+          position: absolute;
+          top: 30px;
+          left: 30px;
+          .material-icons {
+            font-size: 20px;
           }
         }
         .descBox {
-          margin: 15px 0 0 20px;
           h2 {
-            font-size: $fontNomal;
+            font-size: $fontLarge;
             font-weight: 700;
             margin-bottom: 20px;
           }
+        }
+        .infoBox {
+          font-size: $fontSmall;
+          color: #aaa;
           p {
-            font-size: 15px;
-            span {
-              font-size: 13px;
+            margin-bottom: 5px;
+          }
+          span {
+            display: inline-block;
+            &.phone {
+              padding-right: 10px;
+              position: relative;
+              &::after {
+                content: "";
+                display: block;
+                position: absolute;
+                width: 1px;
+                background-color: #aaa;
+                height: 100%;
+                top: 0;
+                right: 0;
+              }
+            }
+            &.distance {
+              padding-left: 10px;
             }
           }
         }
