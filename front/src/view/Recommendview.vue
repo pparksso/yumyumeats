@@ -3,8 +3,8 @@
     <div class="recmHeader">
       <div class="title">맛집 추천받기</div>
       <div class="inputBox">
-        <label
-          ><input type="text" @input="word = $event.target.value" :value="word" @keydown.enter="gps.getShopListAct(x, y, word, 1, 'FD6')" /><span
+        <label>
+          <input type="text" @input="word = $event.target.value" :value="word" @keydown.enter="gps.getShopListAct(x, y, word, 1, 'FD6')" /><span
             class="material-icons"
             @click="gps.getShopListAct(x, y, word, 1, 'FD6')"
           >

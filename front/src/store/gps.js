@@ -50,5 +50,8 @@ export const gpsStore = defineStore("gps", {
     getIdxAct(i) {
       return (this.idx = i);
     },
+    clearList() {
+      this.list = "";
+    },
   },
 });
